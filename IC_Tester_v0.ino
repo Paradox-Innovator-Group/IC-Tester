@@ -54,14 +54,15 @@ void setup() {
   digitalWrite(green, LOW);
   digitalWrite(red, LOW);
   Serial.begin(9600);
-  tone(buzz, 880, 382); delay(382); tone(buzz, 784, 382); delay(382);
-  tone(buzz, 987, 382); delay(764);
-  tone(buzz, 1046, 382); delay(764); 
-  lcd.init();
+   lcd.init();
   lcd.backlight();
   lcd.print("Univrsl ICTester");
   lcd.setCursor(0,1);
   lcd.print("ParadoxInnovator");
+  tone(buzz, 880, 382); delay(382); tone(buzz, 784, 382); delay(382);
+  tone(buzz, 987, 382); delay(764);
+  tone(buzz, 1046, 382); delay(764); 
+ 
 }
 int enteredIC = 0;
 
@@ -70,6 +71,7 @@ int readIC() {
   
     char key = keypad.getKey();
     while (key != '*') {
+      key = keypad.getKey();
     if (key != NO_KEY) {
       if (key == '#' && enteredIC.length() > 0) { // Check if E is pressed and there are characters to delete
         enteredIC.remove(enteredIC.length() - 1); // Remove the last character
@@ -122,8 +124,6 @@ void loop() {
     case 7400:
       Serial.println("Checking IC 7400");
       lcd.clear();
-      lcd.print("ParadoxInnovator");
-      lcd.setCursor(0,1);
       lcd.print("Checking IC7400");
       IC7400();
       break;
@@ -201,6 +201,7 @@ void loop() {
       break;
     default :
       Serial.println("No Data Found!");
+      lcd.clear();
       lcd.print("No Data Found!");
       delay(1000);
       lcd.clear();
@@ -251,7 +252,7 @@ void IC7400()
   if(test1 == test2== test3==test4==HIGH)
   {
     Serial.println("IC7400 Is OK!");
-    
+    delay(20);
     lcd.setCursor(0,1);
     lcd.print("IC7400 Is OK!");
     digitalWrite(green, HIGH);
@@ -267,7 +268,6 @@ void IC7400()
     digitalWrite(buzz, HIGH);
     delay(800);
   }
-  
 }
 
 void IC7402()
