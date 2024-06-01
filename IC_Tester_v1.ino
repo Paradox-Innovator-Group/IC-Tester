@@ -98,17 +98,22 @@ int readIC() {
   int sign = 1;
   int i = 0;
 
-  if (enteredIC.charAt(0) == '-') {
-    sign = -1;
-    i = 1;
-  }
-
-  for (; i < enteredIC.length(); i++) {
-    if (enteredIC.charAt(i) >= '0' && enteredIC.charAt(i) <= '9') {
-      num = num * 10 + (enteredIC.charAt(i) - '0');
+  // if (enteredIC.charAt(0) == '-') {
+  //   sign = -1;
+  //   i = 1;
+  // }
+  if (enteredIC.length() > 0) {
+    if (enteredIC.charAt(0) == '-') {
+      sign = -1;
+      enteredIC.remove(0, 1); // Remove the negative sign
     }
-  }
 
+  for (int i = 0; i < enteredIC.length(); i++) {
+      if (enteredIC.charAt(i) >= '0' && enteredIC.charAt(i) <= '9') {
+        num = num * 10 + (enteredIC.charAt(i) - '0');
+      }
+  }
+  }
   return num * sign;
 }
 void loop() {
@@ -140,24 +145,34 @@ void database()
 {
   if(input == 7400)
       IC7400();
-  if(input == 7402)
+  else if(input == 7402)
       IC7402();
-  if(input == 7404)
+  else if(input == 7404)
       IC7404();
-  if(input == 7408)
+  else if(input == 7408)
       IC7408();
-  if(input == 7410)
+  else if(input == 7410)
       IC7410();
-  if(input == 7420)
+  else if(input == 7420)
       IC7420();
-  if(input == 7432)
+  else if(input == 7432)
       IC7432();
-  if(input == 74266)
+  else if(input == 74266)
       IC74266();
-  if(input == 7476)
+  else if(input == 7476)
       IC7476();
-  if(input == 7486)
+  else if(input == 7486)
       IC7486();
+  else{
+    Serial.print("No Data Found");
+    lcd.setCursor(0,1);
+    lcd.print("No Data Found    ");
+    delay(1000);
+    lcd.clear();
+    lcd.print("Contact..");
+    lcd.setCursor(0,1);
+    lcd.print("ParadoxInnovator");
+  }
 }
 
 void IC7400()
@@ -180,7 +195,7 @@ void IC7400()
   digitalWrite(pin14, HIGH);
 
   //testing IC
-  digitalWrite(pin1, HIGH);
+  digitalWrite(pin1, LOW);
   digitalWrite(pin2, LOW);
   int test1 = digitalRead(pin3);
 
@@ -193,10 +208,10 @@ void IC7400()
   int test3 = digitalRead(pin8);
 
   digitalWrite(pin12, HIGH);
-  digitalWrite(pin13, LOW);
+  digitalWrite(pin13, HIGH);
   int test4 = digitalRead(pin11);
 
-  if (test1 == test2 == test3 == test4 == HIGH)
+  if (test1 == test2 == test3 == HIGH &&  test4 == LOW)
   {
     Serial.println("IC7400 Is OK!");
     delay(20);
@@ -204,6 +219,7 @@ void IC7400()
     lcd.print("IC7400 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -213,7 +229,9 @@ void IC7400()
     lcd.print("IC7400 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -240,25 +258,26 @@ void IC7402()
   digitalWrite(pin2, LOW);
   int test1 = digitalRead(pin1);
 
-  digitalWrite(pin6, LOW);
+  digitalWrite(pin6, HIGH);
   digitalWrite(pin5, LOW);
   int test2 = digitalRead(pin4);
 
   digitalWrite(pin9, LOW);
-  digitalWrite(pin8, LOW);
+  digitalWrite(pin8, HIGH);
   int test3 = digitalRead(pin10);
 
-  digitalWrite(pin12, LOW);
-  digitalWrite(pin11, LOW);
+  digitalWrite(pin12, HIGH);
+  digitalWrite(pin11, HIGH);
   int test4 = digitalRead(pin13);
 
-  if (test1 == test2 == test3 == test4 == HIGH)
+  if ( test2 == test3 == test4 == LOW && test1 ==HIGH)
   {
     Serial.println("IC7402 Is OK!");
     lcd.setCursor(0, 1);
     lcd.print("IC7402 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -267,7 +286,9 @@ void IC7402()
     lcd.print("IC7402 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 void IC7404()
@@ -301,19 +322,20 @@ void IC7404()
   digitalWrite(pin9, LOW);
   int test4 = digitalRead(pin8);
 
-  digitalWrite(pin11, LOW);
+  digitalWrite(pin11, HIGH);
   int test5 = digitalRead(pin10);
 
-  digitalWrite(pin13, LOW);
+  digitalWrite(pin13, HIGH);
   int test6 = digitalRead(pin12);
 
-  if (test1 == test2 == test3 == test4 == test5 == test6 == HIGH)
+  if (test1 == test2 == test3 == test4 == HIGH &&  test5 == test6 == LOW)
   {
     Serial.println("IC7404 Is OK!");
     lcd.setCursor(0, 1);
     lcd.print("IC7404 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green,LOW);
   }
   else
   {
@@ -322,7 +344,9 @@ void IC7404()
     lcd.print("IC7404 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -345,29 +369,30 @@ void IC7408()
   digitalWrite(pin7, LOW);
   digitalWrite(pin14, HIGH);
   //testing IC
-  digitalWrite(pin1, HIGH);
+  digitalWrite(pin1, LOW);
   digitalWrite(pin2, HIGH);
   int test1 = digitalRead(pin3);
 
   digitalWrite(pin4, HIGH);
-  digitalWrite(pin5, HIGH);
+  digitalWrite(pin5, LOW);
   int test2 = digitalRead(pin6);
 
-  digitalWrite(pin9, HIGH);
-  digitalWrite(pin10, HIGH);
+  digitalWrite(pin9, LOW);
+  digitalWrite(pin10, LOW);
   int test3 = digitalRead(pin8);
 
   digitalWrite(pin12, HIGH);
   digitalWrite(pin13, HIGH);
   int test4 = digitalRead(pin11);
 
-  if (test1 == test2 == test3 == test4 == HIGH)
+  if (test1 == test2 == test3 == LOW && test4 == HIGH)
   {
     Serial.println("IC7408 Is OK!");
     lcd.setCursor(0, 1);
     lcd.print("IC7408 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -376,7 +401,9 @@ void IC7408()
     lcd.print("IC7408 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -401,25 +428,29 @@ void IC7410()
   //testing IC
   digitalWrite(pin1, HIGH);
   digitalWrite(pin2, LOW);
+  digitalWrite(pin13,LOW);
   int test1 = digitalRead(pin12);
 
   digitalWrite(pin4, LOW);
   digitalWrite(pin5, HIGH);
+  digitalWrite(pin3, HIGH);
   int test2 = digitalRead(pin6);
 
   digitalWrite(pin9, HIGH);
-  digitalWrite(pin10, LOW);
+  digitalWrite(pin10, HIGH);
+  digitalWrite(pin11, HIGH);
   int test3 = digitalRead(pin8);
 
 
 
-  if (test1 == test2 == test3 == HIGH)
+  if (test1 == test2 ==  HIGH && test3 ==LOW)
   {
     Serial.println("IC7410 Is OK!");
     lcd.setCursor(0, 1);
     lcd.print("IC7410 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -428,7 +459,9 @@ void IC7410()
     lcd.print("IC7410 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -470,6 +503,8 @@ void IC7420()
     lcd.print("IC7420 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green,LOW);
+    
   }
   else
   {
@@ -478,7 +513,9 @@ void IC7420()
     lcd.print("IC7420 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -505,25 +542,26 @@ void IC7432()
   digitalWrite(pin2, HIGH);
   int test1 = digitalRead(pin3);
 
-  digitalWrite(pin4, HIGH);
+  digitalWrite(pin4, LOW);
   digitalWrite(pin5, HIGH);
   int test2 = digitalRead(pin6);
 
   digitalWrite(pin9, HIGH);
-  digitalWrite(pin10, HIGH);
+  digitalWrite(pin10, LOW);
   int test3 = digitalRead(pin8);
 
-  digitalWrite(pin12, HIGH);
-  digitalWrite(pin13, HIGH);
+  digitalWrite(pin12, LOW);
+  digitalWrite(pin13, LOW);
   int test4 = digitalRead(pin11);
 
-  if (test1 == test2 == test3 == test4 == HIGH)
+  if (test1 == test2 == test3 ==  HIGH && test4 ==LOW)
   {
     Serial.println("IC7432 Is OK!");
     lcd.setCursor(0, 1);
     lcd.print("IC7432 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -532,7 +570,9 @@ void IC7432()
     lcd.print("IC7432 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 
@@ -559,8 +599,8 @@ void IC74266()
   digitalWrite(pin2, HIGH);
   int test1 = digitalRead(pin3);
 
-  digitalWrite(pin6, HIGH);
-  digitalWrite(pin5, HIGH);
+  digitalWrite(pin6, LOW);
+  digitalWrite(pin5, LOW);
   int test2 = digitalRead(pin4);
 
   digitalWrite(pin9, LOW);
@@ -578,6 +618,7 @@ void IC74266()
     lcd.print("IC74266 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -586,7 +627,9 @@ void IC74266()
     lcd.print("IC74266Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
 void IC7476()
@@ -704,6 +747,7 @@ void IC7486()
     lcd.print("IC7486 Is OK!");
     digitalWrite(green, HIGH);
     delay(1000);
+    digitalWrite(green, LOW);
   }
   else
   {
@@ -712,6 +756,8 @@ void IC7486()
     lcd.print("IC7486 Is Damage!");
     digitalWrite(red, HIGH);
     digitalWrite(buzz, HIGH);
-    delay(800);
+    delay(1000);
+    digitalWrite(red, LOW);
+    digitalWrite(buzz, LOW);
   }
 }
