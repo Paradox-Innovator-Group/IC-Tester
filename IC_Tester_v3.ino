@@ -46,10 +46,12 @@ char keys[ROWS][COLS] = {
   {'7', '8', '9', 'C'},
   {'*', '0', '#', 'D'}
 };
-byte rowPins[ROWS] = {A4, A5, A6, A7};
-byte colPins[COLS] = {A0, A1, A2, A3};
+byte colPins[COLS] = {A3, A2, A1, A0};
+byte rowPins[ROWS] = {A7, A6, A5, A4};
+
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
-int IC7400(), IC7402(), IC7404(), IC7408(), IC7410(), IC7420(), IC7432(), IC74266(), IC7476(), IC7486(), database();
+int IC7400(), IC7402(), IC7404(), IC7408(), IC7410(), IC7420(), IC7432(), IC74266(), IC7476(), IC7486();
+void database();
 void setup() {
   pinMode(buzz, OUTPUT);
   pinMode(green, OUTPUT);
@@ -137,36 +139,154 @@ int testIC(char command)
   lcd.print("Auto Checking IC");
   lcd.setCursor(0, 1);
   lcd.print("TESTING...");
+
   val = IC7400(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
+  val = IC7401(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
   val = IC7402(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
   val = IC7404(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
+   val = IC7407(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
   val = IC7408(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
   val = IC7410(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
+  val = IC7411(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
   val = IC7420(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
+  val = IC7421(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
+  val = IC7425(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
+  val = IC7427(command);
+  if (val == 1)
+  {
+    delay(1500);
+    return 0;
+  } delay(20);
   val = IC7432(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  } delay(20);
   val = IC74266(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
-  val = IC7476(command);
-  if (val == 1)
-    return 0;
+  } delay(20);
+  //  val = IC7476(command);
+  //  if (val == 1)
+  //  {
+  //    delay(1500);
+  ////    return 0;
+  //  }
   val = IC7486(command);
   if (val == 1)
+  {
+    delay(1500);
     return 0;
+  }
+  lcd.setCursor(0, 1);
+  lcd.print("IC Damaged/NF");
+  delay(1000);
+}
+void database(char command)
+{
+  if (input == "7400")
+    IC7400(command);
+  else if (input == "7401")
+    IC7401(command);
+  else if (input == "7402")
+    IC7402(command);
+  else if (input == "7404")
+    IC7404(command);
+  else if (input == "7407")
+    IC7407(command);
+  else if (input == "7408")
+    IC7408(command);
+  else if (input == "7410")
+    IC7410(command);
+  else if (input == "7411")
+    IC7411(command);
+  else if (input == "7420")
+    IC7420(command);
+  else if (input == "7421")
+    IC7421(command);
+  else if (input == "7425")
+    IC7425(command);
+  else if (input == "7427")
+    IC7427(command);
+  else if (input == "7432")
+    IC7432(command);
+  else if (input == "74266")
+    IC74266(command);
+  else if (input == "7476")
+    IC7476(command);
+  else if (input == "7486")
+    IC7486(command);
+  else {
+    Serial.print("No Data Found");
+    lcd.setCursor(0, 1);
+    lcd.print("No Data Found    ");
+    delay(1000);
+    lcd.clear();
+    lcd.print("Contact..");
+    lcd.setCursor(0, 1);
+    lcd.print("ParadoxInnovator");
+    delay(5000);
+    enteredIC = "";
+    loop();
+  }
 }
 void loop()
 {
@@ -209,7 +329,7 @@ void repeat() {
           if (key == 'C')
           {
             Serial.println("Checking IC");
-            database();
+            database(command);
           }
           if (key == 'D')
           {
@@ -225,45 +345,11 @@ void repeat() {
   }
   repeat();
 }
-void database()
-{
-  if (input == "7400")
-    IC7400();
-  else if (input == "7402")
-    IC7402();
-  else if (input == "7404")
-    IC7404();
-  else if (input == "7408")
-    IC7408();
-  else if (input == "7410")
-    IC7410();
-  else if (input == "7420")
-    IC7420();
-  else if (input == "7432")
-    IC7432();
-  else if (input == "74266")
-    IC74266();
-  else if (input == "7476")
-    IC7476();
-  else if (input == "7486")
-    IC7486();
-  else {
-    Serial.print("No Data Found");
-    lcd.setCursor(0, 1);
-    lcd.print("No Data Found    ");
-    delay(1000);
-    lcd.clear();
-    lcd.print("Contact..");
-    lcd.setCursor(0, 1);
-    lcd.print("ParadoxInnovator");
-    delay(5000);
-    enteredIC = "";
-    loop();
-  }
-}
+
 
 int IC7400(char command)
 {
+  Serial.println("Checking 7400");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -346,10 +432,100 @@ int IC7400(char command)
       digitalWrite(buzz, LOW);
     }
   }
+  return 0;
+}
+
+int IC7401(char command)
+{
+  Serial.println("Checking 7401");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, INPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(pin4, INPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, OUTPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, OUTPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, INPUT);
+  pinMode(pin25, OUTPUT);
+  pinMode(pin26, OUTPUT);
+  pinMode(pin27, INPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+
+  //testing IC
+  digitalWrite(pin2, LOW);
+  digitalWrite(pin3, LOW);
+  test1 = digitalRead(pin1);
+
+  digitalWrite(pin6, HIGH);
+  digitalWrite(pin5, LOW);
+  test2 = digitalRead(pin4);
+
+  digitalWrite(pin23, HIGH);
+  digitalWrite(pin22, LOW);
+  test3 = digitalRead(pin24);
+
+  digitalWrite(pin26, HIGH);
+  digitalWrite(pin25, HIGH);
+  test4 = digitalRead(pin27);
+  Serial.println(test1);
+  Serial.println(test2);
+  Serial.println(test3);
+  Serial.println(test4);
+  if (test1 == HIGH && test2 == HIGH && test3 == HIGH &&  test4 == LOW)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7401 Is OK!");
+      delay(20);
+      lcd.setCursor(0, 1);
+      lcd.print("IC7401 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7401   NAND   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7401   NAND   OK");
+      return 1;
+    }
+  }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7401 is Damaged!!");
+
+      lcd.setCursor(0, 1);
+      lcd.print("IC7401 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  }
+  return 0;
 }
 
 int IC7402(char command)
 {
+  Serial.println("Checking 7402");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -407,28 +583,32 @@ int IC7402(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7402   NOR   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7402   NOR   OK");
       return 1;
     }
   }
   else
   {
-    Serial.println("IC7402 is Damaged!!");
-    lcd.setCursor(0, 1);
-    lcd.print("IC7402 Is Damage!");
-    digitalWrite(red, HIGH);
-    digitalWrite(buzz, HIGH);
-    delay(1000);
-    lcd.setCursor(0, 1);
-    lcd.print("                  ");
-    digitalWrite(red, LOW);
-    digitalWrite(buzz, LOW);
-  }
+    if (command == 'B')
+    {
+      Serial.println("IC7402 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7402 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
 }
 int IC7404(char command)
 {
+  Serial.println("Checking 7404");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -491,9 +671,9 @@ int IC7404(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7404   NOT   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7404   NOT   OK");
       return 1;
     }
   }
@@ -512,11 +692,100 @@ int IC7404(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
+  } return 0;
+}
+int IC7407(char command)
+{
+  Serial.println("Checking 7407");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, INPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(pin4, INPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, INPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, INPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, INPUT);
+  pinMode(pin25, OUTPUT);
+  pinMode(pin26, INPUT);
+  pinMode(pin27, OUTPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+  //testing IC
+  digitalWrite(pin1, LOW);
+  test1 = digitalRead(pin2);
+
+  digitalWrite(pin3, LOW);
+  test2 = digitalRead(pin4);
+
+  digitalWrite(pin5, LOW);
+  test3 = digitalRead(pin6);
+
+  digitalWrite(pin23, LOW);
+  test4 = digitalRead(pin22);
+
+  digitalWrite(pin25, HIGH);
+  test5 = digitalRead(pin24);
+
+  digitalWrite(pin27, HIGH);
+  test6 = digitalRead(pin26);
+  Serial.println(test1);
+  Serial.println(test2);
+  Serial.println(test3);
+  Serial.println(test4);
+  Serial.println(test5);
+  Serial.println(test6);
+
+  if (test1 == LOW && test2 == LOW && test3 == LOW && test4 == LOW &&  test5 == HIGH && test6 == HIGH)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7407 Is OK!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7407 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7407  BUFF   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7407  BUFF   OK");
+      return 1;
+    }
   }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7407 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7407 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
 }
 
 int IC7408(char command)
 {
+  Serial.println("Checking 7408");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -574,9 +843,9 @@ int IC7408(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7408   AND   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7408   AND   OK");
       return 1;
     }
   }
@@ -595,11 +864,12 @@ int IC7408(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
+  } return 0;
 }
 
 int IC7410(char command)
 {
+  Serial.println("Checking 7410");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -657,9 +927,9 @@ int IC7410(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7410   NAND   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7410   NAND   OK");
       return 1;
     }
   }
@@ -678,11 +948,95 @@ int IC7410(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
+  } return 0;
+}
+int IC7411(char command)
+{
+  Serial.println("Checking 7411");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(pin4, OUTPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, INPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, INPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, OUTPUT);
+  pinMode(pin25, OUTPUT);
+  pinMode(pin26, INPUT);
+  pinMode(pin27, OUTPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+  //testing IC
+  digitalWrite(pin1, HIGH);
+  digitalWrite(pin2, LOW);
+  digitalWrite(pin27, LOW);
+  test1 = digitalRead(pin26);
+
+  digitalWrite(pin4, LOW);
+  digitalWrite(pin5, HIGH);
+  digitalWrite(pin3, HIGH);
+  test2 = digitalRead(pin6);
+
+  digitalWrite(pin25, HIGH);
+  digitalWrite(pin24, HIGH);
+  digitalWrite(pin23, HIGH);
+  test3 = digitalRead(pin22);
+  Serial.println(test1);
+  Serial.println(test2);
+  Serial.println(test3);
+
+
+  if (test1 == LOW && test2 ==  LOW && test3 == HIGH)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7411 Is OK!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7411 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7411   AND   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7411   AND   OK");
+      return 1;
+    }
   }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7411 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7411 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
 }
 
 int IC7420(char command)
 {
+  Serial.println("Checking 7420");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -734,9 +1088,9 @@ int IC7420(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7420   NAND   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7420   NAND   OK");
       return 1;
     }
 
@@ -756,11 +1110,269 @@ int IC7420(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
+  } return 0;
 }
 
+int IC7421(char command)
+{
+  Serial.println("Checking 7421");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, INPUT);
+  pinMode(pin4, OUTPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, INPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, INPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, OUTPUT);
+  pinMode(pin25, INPUT);
+  pinMode(pin26, OUTPUT);
+  pinMode(pin27, OUTPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+  //testing IC
+  digitalWrite(pin1, HIGH);
+  digitalWrite(pin2, HIGH);
+  digitalWrite(pin4, LOW);
+  digitalWrite(pin5, HIGH);
+  test1 = digitalRead(pin6);
+
+  digitalWrite(pin26, HIGH);
+  digitalWrite(pin27, HIGH);
+  digitalWrite(pin24, HIGH);
+  digitalWrite(pin23, HIGH);
+  test2 = digitalRead(pin22);
+  Serial.println(test1);
+  Serial.println(test2);
+  if (test1 == LOW && test2 == HIGH)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7421 Is OK!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7421 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7421   AND   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7421   AND   OK");
+      return 1;
+    }
+
+  }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7421 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7421 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
+}
+int IC7425(char command)
+{
+  Serial.println("Checking 7425");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(pin4, OUTPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, INPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, INPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, OUTPUT);
+  pinMode(pin25, OUTPUT);
+  pinMode(pin26, OUTPUT);
+  pinMode(pin27, OUTPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+  //testing IC
+  digitalWrite(pin1, HIGH);
+  digitalWrite(pin2, HIGH);
+  digitalWrite(pin4, LOW);
+  digitalWrite(pin5, HIGH);
+  digitalWrite(pin3, HIGH);// en on
+  test1 = digitalRead(pin6);
+
+  digitalWrite(pin1, HIGH);
+  digitalWrite(pin2, HIGH);
+  digitalWrite(pin4, LOW);
+  digitalWrite(pin5, HIGH);
+  digitalWrite(pin3, LOW);// en off
+  test2 = digitalRead(pin6);
+
+  digitalWrite(pin26, HIGH);
+  digitalWrite(pin27, HIGH);
+  digitalWrite(pin24, HIGH);
+  digitalWrite(pin23, HIGH);
+  digitalWrite(pin25, LOW);// en off
+  test3 = digitalRead(pin22);
+
+  digitalWrite(pin26, LOW);
+  digitalWrite(pin27, LOW);
+  digitalWrite(pin24, LOW);
+  digitalWrite(pin23, LOW);
+  digitalWrite(pin25, HIGH);// en off
+  test3 = digitalRead(pin22);
+  Serial.println(test1);
+  Serial.println(test2);
+  Serial.println(test3);
+  Serial.println(test4);
+  if (test1 == LOW && test2 == LOW && test3 == LOW && test4 == HIGH)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7425 Is OK!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7425 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7425   NOR   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7425   NOR   OK");
+      return 1;
+    }
+
+  }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7425 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7425 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
+}
+int IC7427(char command)
+{
+  Serial.println("Checking 7410");
+  test1 = 0;
+  test2 = 0;
+  test3 = 0;
+  test4 = 0;
+  test5 = 0;
+  test6 = 0;
+  pinMode(pin1, OUTPUT);
+  pinMode(pin2, OUTPUT);
+  pinMode(pin3, OUTPUT);
+  pinMode(pin4, OUTPUT);
+  pinMode(pin5, OUTPUT);
+  pinMode(pin6, INPUT);
+  pinMode(pin7, OUTPUT);
+  pinMode(pin22, INPUT);
+  pinMode(pin23, OUTPUT);
+  pinMode(pin24, OUTPUT);
+  pinMode(pin25, OUTPUT);
+  pinMode(pin26, INPUT);
+  pinMode(pin27, OUTPUT);
+  pinMode(pin28, OUTPUT);
+  digitalWrite(pin7, LOW);
+  digitalWrite(pin28, HIGH);
+  //testing IC
+  digitalWrite(pin1, HIGH);
+  digitalWrite(pin2, LOW);
+  digitalWrite(pin27, LOW);
+  test1 = digitalRead(pin26);
+
+  digitalWrite(pin4, LOW);
+  digitalWrite(pin5, HIGH);
+  digitalWrite(pin3, HIGH);
+  test2 = digitalRead(pin6);
+
+  digitalWrite(pin25, LOW);
+  digitalWrite(pin24, LOW);
+  digitalWrite(pin23, LOW);
+  test3 = digitalRead(pin22);
+  Serial.println(test1);
+  Serial.println(test2);
+  Serial.println(test3);
+
+
+  if (test1 == LOW && test2 ==  LOW && test3 == HIGH)
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7427 Is OK!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7427 Is OK!");
+      digitalWrite(green, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(green, LOW);
+    }
+    else if (command == 'A')
+    {
+      Serial.println("7427   NOR   OK");
+      lcd.setCursor(0, 1);
+      lcd.print("7427   NOR   OK");
+      return 1;
+    }
+  }
+  else
+  {
+    if (command == 'B')
+    {
+      Serial.println("IC7427 is Damaged!!");
+      lcd.setCursor(0, 1);
+      lcd.print("IC7427 Is Damage!");
+      digitalWrite(red, HIGH);
+      digitalWrite(buzz, HIGH);
+      delay(1000);
+      lcd.setCursor(0, 1);
+      lcd.print("                  ");
+      digitalWrite(red, LOW);
+      digitalWrite(buzz, LOW);
+    }
+  } return 0;
+}
 int IC7432(char command)
 {
+  Serial.println("Checking 7432");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -818,9 +1430,9 @@ int IC7432(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7432   OR   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7432   OR   OK");
       return 1;
     }
   }
@@ -839,11 +1451,12 @@ int IC7432(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
+  } return 0;
 }
 
 int IC74266(char command)
 {
+  Serial.println("Checking 74266");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -901,9 +1514,9 @@ int IC74266(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("74266  XNOR   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("74266  XNOR   OK");
       return 1;
     }
   }
@@ -922,10 +1535,11 @@ int IC74266(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
+  } return 0;
 }
 int IC7476(char command)
 {
+  Serial.println("Checking 7476");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -953,7 +1567,6 @@ int IC7476(char command)
 
   digitalWrite(pin25, LOW);
   digitalWrite(pin5, HIGH);
-  pwm();
   //testing IC
   digitalWrite(pin4, HIGH);
   digitalWrite(pin28, LOW);
@@ -1004,9 +1617,9 @@ int IC7476(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7476   JK   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7476   JK   OK");
       return 1;
     }
   }
@@ -1025,11 +1638,12 @@ int IC7476(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
+  } return 0;
 }
 
 int IC7486(char command)
 {
+  Serial.println("Checking 7486");
   test1 = 0;
   test2 = 0;
   test3 = 0;
@@ -1087,9 +1701,9 @@ int IC7486(char command)
     }
     else if (command == 'A')
     {
-      Serial.println("7400   NAND   OK");
+      Serial.println("7486   XOR   OK");
       lcd.setCursor(0, 1);
-      lcd.print("7400   NAND   OK");
+      lcd.print("7486   XOR   OK");
       return 1;
     }
   }
@@ -1108,47 +1722,5 @@ int IC7486(char command)
       digitalWrite(red, LOW);
       digitalWrite(buzz, LOW);
     }
-  }
-}
-
-void pwm() {
-  // Set pin 2 and pin 6 as output
-  pinMode(pin1, OUTPUT);
-  pinMode(pin6, OUTPUT);
-
-  // Configure Timer1 for 1 Hz interrupt
-  noInterrupts();           // Disable all interrupts
-  TCCR1A = 0;               // Clear Timer/Counter Control Registers
-  TCCR1B = 0;
-  TCNT1 = 0;                // Initialize counter value to 0
-  OCR1A = 7812;             // Set compare match register for 1 Hz (16 MHz / 1024 / 2)
-  TCCR1B |= (1 << WGM12);   // CTC mode
-  TCCR1B |= (1 << CS12) | (1 << CS10);  // 1024 prescaler
-  TIMSK1 |= (1 << OCIE1A);  // Enable timer compare interrupt
-
-  // Configure Timer3 for 1 Hz interrupt
-  TCCR3A = 0;               // Clear Timer/Counter Control Registers
-  TCCR3B = 0;
-  TCNT3 = 0;                // Initialize counter value to 0
-  OCR3A = 7812;             // Set compare match register for 1 Hz (16 MHz / 1024 / 2)
-  TCCR3B |= (1 << WGM32);   // CTC mode
-  TCCR3B |= (1 << CS32) | (1 << CS30);  // 1024 prescaler
-  TIMSK3 |= (1 << OCIE3A);  // Enable timer compare interrupt
-
-  interrupts();             // Enable all interrupts
-}
-
-
-// Timer1 interrupt service routine
-ISR(TIMER1_COMPA_vect) {
-  static bool state = false;
-  state = !state;
-  digitalWrite(pin2, state);  // Toggle pin 2
-}
-
-// Timer3 interrupt service routine
-ISR(TIMER3_COMPA_vect) {
-  static bool state = false;
-  state = !state;
-  digitalWrite(pin6, state);  // Toggle pin 6
+  } return 0;
 }
