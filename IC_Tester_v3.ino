@@ -2,7 +2,7 @@
 #include <Keypad.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-//28 27 26 25 24 23 22 21||||| 20 19 18 17 16 15
+//28 27 26 25 24 23 22 30||||| 29 19 18 17 16 15
 //1  2  3  4  5  6  7  8 ||||| 9  10 11 12 13 14
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
